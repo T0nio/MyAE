@@ -162,7 +162,7 @@ class DevisController extends Controller
 
     }
 
-    public function downloadAction(Request $request, $id, $mode, $slug)
+    public function downloadAction(Request $request, $id, $mode, $slug, $inline)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('LGMyAEBundle:Devis');
 
@@ -187,13 +187,14 @@ class DevisController extends Controller
 
         $filename = $devis->getName();
 
+        $contentDisposition = ($inline == true)?'inline; filename="'.$filename.'.pdf"':'attachement; filename="'.$filename.'.pdf"';
+
         return new Response(
             $snappy->getOutputFromHtml($html),
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                #'Content-Disposition'   => 'attachement; filename="'.$filename.'.pdf"'
-                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+                'Content-Disposition'   => $contentDisposition
             )
         );
     }

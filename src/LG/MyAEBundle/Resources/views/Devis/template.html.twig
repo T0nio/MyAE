@@ -25,12 +25,9 @@
     }
 </style>
   {% block stylesheets %}
-    {% stylesheets '@css_bootstrap' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ base_dir ~ asset_url }}" />
-    {% endstylesheets %}
-    {% stylesheets '@LGMyAEBundle/Resources/public/css/pdf.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ base_dir ~ asset_url }}" />
-    {% endstylesheets %}
+
+        <link rel="stylesheet" href="{{ base_dir ~ '/css/bootstrap.min.css' }}" />
+        <link rel="stylesheet" href="{{ base_dir ~ '/css/pdf.css' }}" />
   {% endblock %}
     </head>
     <body>

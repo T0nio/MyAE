@@ -32,7 +32,7 @@ class DevisType extends AbstractType
               'choice_label' => 'name',
           ))
           ->add('title',        TextType::class)
-          ->add('description',  TextareaType::class)
+          ->add('description',  TextareaType::class, array('required' => false))
           ->add('validity',     TextType::class)
           ->add('markup',       TextType::class)
           ->add('remisable',    CheckboxType::class, array(

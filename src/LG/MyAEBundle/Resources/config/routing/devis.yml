@@ -31,6 +31,24 @@ devis_edit:
     requirements:
         id: \d+
 
+
+
+devis_view_pdf:
+    path: /Afficher/PDF/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:download
+        mode: id
+        inline: true
+    requirements:
+        id: \d+
+
+devis_view_pdf_slug:
+    path: /Afficher/PDF/{slug}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:download
+        mode: slug
+        inline: true
+
 devis_view:
     path: /Afficher/{id}/
     defaults:
@@ -43,6 +61,7 @@ devis_download:
     defaults:
         _controller: LGMyAEBundle:Devis:download
         mode: id
+        inline: false
     requirements:
         id: \d+
 
@@ -51,4 +70,5 @@ devis_download_slug:
     defaults:
         _controller: LGMyAEBundle:Devis:download
         mode: slug
+        inline: false
 

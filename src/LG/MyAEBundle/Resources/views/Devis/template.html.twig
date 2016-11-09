@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title></title>
+<style type="text/css">
+  @font-face {
+    font-family: 'FontAwesome';
+    src: url({{asset('fonts/fontawesome-webfont.eot?v=4.2.0')}});
+    src: url({{asset('fonts/fontawesome-webfont.eot?#iefix&v=4.2.0')}}) format('embedded-opentype'),
+    url({{asset('fonts/fontawesome-webfont.woff?v=4.2.0')}}) format('woff'),
+    url({{asset('fonts/fontawetablesome-webfont.ttf?v=4.2.0')}}) format('truetype'),
+    url({{asset('fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular')}}) format('svg');
+    url({{asset('fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular')}}) format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+    @font-face {
+      font-family: 'Glyphicons Halflings';
+      src: url({{asset('fonts/glyphicons.eot')}}) format('embedded-opentype'),
+      url({{asset('fonts/glyphicons.woff2')}}) format('woff2'),
+      url({{asset('fonts/glyphicons.woff')}}) format('woff'),
+      url({{asset('fonts/glyphicons.ttf')}}) format('truetype'),
+      url({{asset('fonts/glyphicons.svg#glyphicons_halflingsregular')}}) format('svg');
+    }
+</style>
+  {% block stylesheets %}
+    {% stylesheets '@css_bootstrap' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ base_dir ~ asset_url }}" />
+    {% endstylesheets %}
+    {% stylesheets '@LGMyAEBundle/Resources/public/css/pdf.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ base_dir ~ asset_url }}" />
+    {% endstylesheets %}
+  {% endblock %}
+    </head>
+    <body>
+      <div class="container-fluid" id="body-slim">
+        <h1>{{ devis.name }}</h1>
+        <div class="row infos">
+            <div class="col-xs-4 myPart">
+                <p>
+                    <strong>Au nom et pour le compte de</strong><br>
+                    {{ devis.ownedBy.firstName }} {{ devis.ownedBy.name }}<br>
+                    {{ devis.ownedBy.address }}<br>
+                    {{ devis.ownedBy.postalCode}} {{ devis.ownedBy.city }}
+                </p>
+            </div>
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4 text-right">
+                <p>
+                    <strong>A l'attention de </strong><br>
+                    {{ devis.client.referentName }}<br>
+                    {{ devis.client.name }}<br>
+
+                </p>
+            </div>
+        </div>
+        <div class="row infosDate">
+            <div class="col-xs-6">Date: {{ devis.date|date('d/m/Y') }}</div>
+            <div class="col-xs-6 text-right">Validité de l'offre: {{ devis.validity }} jours</div>
+        </div>
+        <div class="description">
+            <h2 class="text-center">{{ devis.title }}</h2>
+            <p class="text-justify">{{ devis.description|nl2br }}</p>
+        </div>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th class="details">Détails</th>
+                    <th class="quantity">Quantité</th>
+                    <th class="pu">PU HT</th>
+                    {% if devis.remisable %}
+                        <th class="remise">Remise</th>
+                    {% endif %}
+                    <th class="total">Total HT</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    {% if devis.remisable %}
+                        <th class="text-right" colspan="4">Total TTC</th>
+                    {% else %}
+                        <th class="text-right" colspan="3">Total TTC</th>
+                    {% endif %}
+                    <th>{{ devis.totalTTC }} €</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for ligne in devis.lignes %}
+                    {% if ligne.type == "empty" %}
+                        <tr class="devis-empty">
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% elseif ligne.type == "title" %}
+                        <tr class="devis-title">
+                          <td class="title">{{ ligne.title }}</td>
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% elseif ligne.type == "subtotal" %}
+                        <tr class="devis-subtotal">
+                          <td class="title">{{ ligne.title }}</td>
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% elseif ligne.type == "default" %}
+                        <tr class="devis-default">
+                          <td class="title">{{ ligne.title }}</td>
+                          <td>{{ ligne.quantity }}</td>
+                          <td>{{ ligne.pu }} €</td>
+                            {% if devis.remisable %}
+                                <td>{{ ligne.remise }} %</td>
+                            {% endif %}
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="infosDiverses">
+            Paiement: virement sous 30 jours
+        </div>
+        <div class="legal">
+            TVA non applicable - article 293 B du CGI
+        </div>
+        <footer class="text-center">
+            {{ devis.ownedBy.firstName }} {{ devis.ownedBy.name }} - {{ devis.ownedBy.address }} {{ devis.ownedBy.postalCode}} {{ devis.ownedBy.city }} {{ devis.ownedBy.country }} - SIRET : {{ devis.ownedBy.siret }} - Email : {{ devis.ownedBy.email }}
+        </footer>
+      </div>
+    </body>
+    <script type="text/javascript" src="dist/bundle.js"></script>
+</html>

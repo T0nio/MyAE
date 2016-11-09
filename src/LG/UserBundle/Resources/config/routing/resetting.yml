@@ -1,0 +1,19 @@
+fos_user_resetting_request:
+    path: /Requete
+    defaults:
+        _controller: FOSUserBundle:Resetting:request
+
+fos_user_resetting_send_email:
+    path: /EnvoiMail
+    defaults:
+        _controller: FOSUserBundle:Resetting:sendEmail
+
+fos_user_resetting_check_email:
+    path: /VerificationMail
+    defaults:
+        _controller: FOSUserBundle:Resetting:checkEmail
+
+fos_user_resetting_reset:
+    path: /{token}
+    defaults:
+        _controller: FOSUserBundle:Resetting:reset

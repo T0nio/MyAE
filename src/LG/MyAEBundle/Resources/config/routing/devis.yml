@@ -1,0 +1,54 @@
+devis_list:
+    path: /{page}
+    defaults:
+        _controller: LGMyAEBundle:Devis:index
+        page: 1
+    requirements:
+        page: \d*
+
+devis_add:
+    path: /Creer/
+    defaults:
+        _controller: LGMyAEBundle:Devis:add
+
+
+devis_add_with_slug:
+    path: /Creer/{clientSlug}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:add
+
+devis_remove:
+    path: /Supprimer/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:remove
+    requirements:
+        id: \d+
+
+devis_edit:
+    path: /Modifier/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:edit
+    requirements:
+        id: \d+
+
+devis_view:
+    path: /Afficher/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:view
+    requirements:
+        id: \d+
+
+devis_download:
+    path: /Telecharger/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:download
+        mode: id
+    requirements:
+        id: \d+
+
+devis_download_slug:
+    path: /Telecharger/{slug}/
+    defaults:
+        _controller: LGMyAEBundle:Devis:download
+        mode: slug
+

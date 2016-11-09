@@ -1,0 +1,16 @@
+<tr class="ligne">
+  <td class="del-button text-center"></td>
+  <td>{{ form_widget(form.type, {'attr': {'class': 'form-control selectType', 'data-id': '__name__id__'}}) }}</td>
+  <td>{{ form_widget(form.title, {'attr': {'class': 'form-control inputTitle'}}) }}  </td>
+  <td>{{ form_widget(form.quantity, {'attr': {'class': 'form-control inputQuantity'}}) }}</td>
+  <td class="tdPu">{{ form_widget(form.pu, {'attr': {'class': 'form-control inputPu'}}) }}</td>
+  <td class="tdRemisable" data-state="remisable">
+    <div class="input-group inputGroupRemise">
+      {{ form_widget(form.remise, {'attr': {'class': 'form-control inputRemise'}}) }}
+      <div class="input-group-addon">%</div>
+    </div>
+  </td>
+  <td>{{ form_widget(form.subtotals, {'attr': {'class': 'form-control inputSubtotals'}}) }}</td>
+  {{ form_widget(form.ordre, {'attr': {'data-value': '__name__id__', 'class': 'ordreHidden'}}) }}
+  {{ form_rest(form) }}
+</tr>

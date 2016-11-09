@@ -1,0 +1,237 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Clients - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des clients</h1>
+
+  <hr>
+  {% if addEdit == "add" %}
+    <h2>Ajout d'un client</h2>
+  {% else %}
+    <h2>Modification d'un client</h2>
+  {% endif %}
+
+  <div class="well">
+    {{ form_start(clientForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(clientForm) }}
+
+      <div class="row">
+
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.name, "Nom de l'entreprise", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.name, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(clientForm.name) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.name) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.referentName, "Nom du référent", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.referentName, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(clientForm.referentName) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.referentName) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.status, "Status", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.status, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(clientForm.status) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.status) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.dateActif, "Date de dernière interraction", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.dateActif, {'attr': {'class': ''}}) }}
+              </div>
+              {% if form_errors(clientForm.dateActif) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.dateActif) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.mail, "Mail", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.mail, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(clientForm.mail) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.mail) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(clientForm.telephone, "Telephone", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(clientForm.telephone, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(clientForm.telephone) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(clientForm.telephone) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <h3 class="text-center">{{ form_label(clientForm.addresses) }}</h3>
+          </div>
+          <div class="col-md-12">{{ form_errors(clientForm.addresses) }}</div>
+
+        </div>
+
+
+        <div id="collectionContainer"
+             data-prototype="
+                 {% filter escape %}
+                     {{ include('LGMyAEBundle:Address:prototype.html.twig', { 'form': clientForm.addresses.vars.prototype }) }}
+                 {% endfilter %}">
+            {% for address in clientForm.addresses %}
+              {{ include('LGMyAEBundle:Address:prototype.html.twig', { 'form': address }) }}
+            {% endfor %}
+
+
+        </div>
+        <div class="form-group">
+          {# Ugluy debug. If not that "address" title appear #}
+          {{ form_widget(clientForm.addresses) }}
+          <div class="col-md-12 text-center"><a href="#" id="add_address" class="btn btn-default">Ajouter une adresse!</a></div>
+        </div>
+
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        <div class="form-group">
+        <div class="col-md-12 text-center">
+          {{ form_widget(clientForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+          </div>
+        </div>
+        {{ form_rest(clientForm) }}
+
+
+
+      </div>
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(clientForm) }}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+{# Voici le script en question : #}
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $container = $('div#collectionContainer');
+    var index = $container.find('.address').length;
+    $('#add_address').click(function(e) {
+      addCategory($container);
+      e.preventDefault();
+      return false;
+    });
+
+    if (index != 0) {
+      $container.children('.address').each(function() {
+        $(this).find("h4").html($(this).find("h4").html().replace(/__name__label__/g, 'Adresse n°' + (index)))
+        addDeleteLink($(this));
+      });
+    }
+
+
+    function addCategory($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Adresse n°' + (index+1))
+        .replace(/__name__/g,        index)
+      ;
+
+      var $prototype = $(template);
+
+      addDeleteLink($prototype);
+
+      $container.append($prototype);
+
+      index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+      $prototype.find(".del-button").append($deleteLink);
+
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+
+        e.preventDefault();
+        return false;
+      });
+    }
+  });
+</script>
+
+{% endblock %}

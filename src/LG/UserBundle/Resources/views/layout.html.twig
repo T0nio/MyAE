@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}myAE{% endblock %}</title>
+<style type="text/css">
+  @font-face {
+    font-family: 'FontAwesome';
+    src: url({{asset('fonts/fontawesome-webfont.eot?v=4.2.0')}});
+    src: url({{asset('fonts/fontawesome-webfont.eot?#iefix&v=4.2.0')}}) format('embedded-opentype'),
+    url({{asset('fonts/fontawesome-webfont.woff?v=4.2.0')}}) format('woff'),
+    url({{asset('fonts/fontawesome-webfont.ttf?v=4.2.0')}}) format('truetype'),
+    url({{asset('fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular')}}) format('svg');
+    url({{asset('fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular')}}) format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+    @font-face {
+      font-family: 'Glyphicons Halflings';
+      src: url({{asset('fonts/glyphicons.eot')}}) format('embedded-opentype'),
+      url({{asset('fonts/glyphicons.woff2')}}) format('woff2'),
+      url({{asset('fonts/glyphicons.woff')}}) format('woff'),
+      url({{asset('fonts/glyphicons.ttf')}}) format('truetype'),
+      url({{asset('fonts/glyphicons.svg#glyphicons_halflingsregular')}}) format('svg');
+    }
+</style>
+  {% block stylesheets %}
+    {% stylesheets '@css_bootstrap_and_sbadmin' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% stylesheets '@LGUserBundle/Resources/public/css/user.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+  {% endblock %}
+</head>
+<body>
+    <div class="container-fluid">
+          <div id="connexion" class="col-md-4 col-md-push-4 well">
+              {% block fos_user_content %}{% endblock %}
+            </div>
+            <!-- /#connexion -->
+    </div>
+
+
+  {% block javascripts %}
+    {% javascripts '@js_bootstrap_and_jquery' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+  {% endblock %}
+
+</body>
+</html>

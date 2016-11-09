@@ -1,0 +1,17 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier {{ client.name }} - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des clients <span class="small"><a href="{{ path('client_list')}}">Retour à la liste des clients</a></span></h1>
+
+  <hr>
+
+  <h2>{{ client.name }} </h2>
+
+  <p>Formulaire de modification</p>
+
+{% endblock %}

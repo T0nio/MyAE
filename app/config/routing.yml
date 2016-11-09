@@ -1,0 +1,24 @@
+lg_my_ae:
+    resource: "@LGMyAEBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+fos_user_security:
+    resource: "@LGUserBundle/Resources/config/routing/security.yml"
+
+fos_user_profile:
+    resource: "@LGUserBundle/Resources/config/routing/profile.yml"
+    prefix: /Profil
+
+fos_user_register:
+    resource: "@LGUserBundle/Resources/config/routing/registration.yml"
+    prefix: /Inscription
+
+fos_user_resetting:
+    resource: "@LGUserBundle/Resources/config/routing/resetting.yml"
+    prefix: /Reinitialisation
+
+fos_user_change_password:
+    path: /Profil/Modifier/MotDePasse
+    defaults:
+        _controller: FOSUserBundle:ChangePassword:changePassword

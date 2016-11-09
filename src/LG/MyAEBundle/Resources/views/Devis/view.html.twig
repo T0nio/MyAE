@@ -1,0 +1,138 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Devis {{ devis.name }} - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des devis <span class="small"><a href="{{ path('devis_list')}}">Retour à la liste des devis</a></span></h1>
+
+  <hr>
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+        <h2>{{ devis.name }} <small><a href="{{ path('devis_download_slug', {'slug': devis.slug})}}"><i class="fa fa-download" aria-hidden="true"></i> Voir le PDF</a> - <a href="{{ path('devis_edit', {'id': devis.id})}}"><i class="fa fa-edit" aria-hidden="true"></i> Modifier le devis</a></small></h2>
+
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Client : </strong> {{ devis.client.name }}<br>
+        <strong>Date : </strong> {{ devis.date|date("d/m/Y") }}<br>
+        <strong>Fin de validité : </strong> {{ devis.dateValidite|date("d/m/Y") }}<br>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Marge à déduire : </strong> {{ devis.markup }} %<br>
+        <strong>Négociable ? : </strong> {% if devis.remisable %} Oui {% else %} Non {% endif %}<br>
+        <strong>Titre : </strong> {{ devis.title }}<br>
+      </p>
+    </div>
+    <div class="col-md-12">
+             <strong>Description : </strong> {{ devis.description|nl2br }}<br>
+    </div>
+    <div class="col-md-12">
+      <h3>Lignes</h3>
+        <table class="table table-condensed table-bordered" id="devisTable">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Quantité</th>
+              <th>PU</th>
+              {% if devis.remisable %}
+                <th>Remise</th>
+              {% endif %}
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              {% if devis.remisable %}
+                <th class="text-right" colspan="4">Total</th>
+              {% else %}
+                <th class="text-right" colspan="3">Total</th>
+              {% endif %}
+              <th>{{ devis.totalTTC }} €</th>
+            </tr>
+            <tr>
+              {% if devis.remisable %}
+                <th class="text-right" colspan="4">Total après markup de {{ devis.markup }} %</th>
+              {% else %}
+                <th class="text-right" colspan="3">Total après markup de {{ devis.markup }} %</th>
+              {% endif %}
+              <th>{{ devis.getTotalAfterMarkup|round(2, 'floor') }} €</th>
+            </tr>
+            <tr>
+              {% if devis.remisable %}
+                <th class="text-right" colspan="4">Total pour moi</th>
+              {% else %}
+                <th class="text-right" colspan="3">Total pour moi</th>
+              {% endif %}
+              <th>{{ devis.getTotalForMe|round(2, 'floor') }} €</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for ligne in devis.lignes %}
+                    {% if ligne.type == "empty" %}
+                        <tr class="devis-empty">
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% elseif ligne.type == "title" %}
+                        <tr class="devis-title">
+                          <td class="title">{{ ligne.title }}</td>
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% elseif ligne.type == "subtotal" %}
+                        <tr class="devis-subtotal">
+                          <td class="title">{{ ligne.title }}</td>
+                            {% if devis.remisable %}
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% elseif ligne.type == "default" %}
+                        <tr class="devis-default">
+                          <td class="title">{{ ligne.title }}</td>
+                          <td>{{ ligne.quantity }}</td>
+                          <td>{{ ligne.pu }} €</td>
+                            {% if devis.remisable %}
+                                <td>{{ ligne.remise }} %</td>
+                            {% endif %}
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+{% endblock %}

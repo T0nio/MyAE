@@ -1,0 +1,45 @@
+{% if app.request.attributes.get('_route') == 'home' %}
+<li class="active">
+{% else %}
+<li>
+{% endif %}
+    <a href="{{ path('home') }}"><i class="fa fa-fw fa-dashboard"></i> Accueil</a>
+</li>
+<li>
+  <a href="javascript:;" data-toggle="collapse" data-target="#client" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Clients <i class="fa fa-fw fa-caret-down"></i></a>
+  <ul id="client" class="collapse in" aria-expanded="true" style="">
+    {% if app.request.attributes.get('_route') == 'client_list' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('client_list') }}">Liste</a>
+    </li>
+    {% if app.request.attributes.get('_route') == 'client_add' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('client_add') }}">Créer</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="javascript:;" data-toggle="collapse" data-target="#client" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Devis <i class="fa fa-fw fa-caret-down"></i></a>
+  <ul id="client" class="collapse in" aria-expanded="true" style="">
+    {% if app.request.attributes.get('_route') == 'devis_list' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('devis_list') }}">Liste</a>
+    </li>
+    {% if app.request.attributes.get('_route') == 'devis_add' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('devis_add') }}">Créer</a>
+    </li>
+  </ul>
+</li>

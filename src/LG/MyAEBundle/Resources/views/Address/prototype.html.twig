@@ -1,0 +1,61 @@
+<div class="address" id="address-__name__">
+  <div class="col-md-12">
+    <h4 class="text-center">__name__label__</h4>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.type, "Type", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.type) }}
+
+    <div class="col-md-4">
+      {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    {{ form_label(form.name, "Nom de la personne", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.name) }}
+    <div class="col-md-4">
+      {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.address, "Adresse", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.address) }}
+
+    <div class="col-md-4">
+      {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    {{ form_label(form.additonalAddress, "Complement d'adresse", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.additonalAddress) }}
+    <div class="col-md-4">
+      {{ form_widget(form.additonalAddress, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.postalCode, "Code postale", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.postalCode) }}
+
+    <div class="col-md-4">
+      {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    {{ form_label(form.city, "Ville", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.city) }}
+    <div class="col-md-4">
+      {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.country, "Pays", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+    {{ form_errors(form.country) }}
+
+    <div class="col-md-4">
+      {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="col-md-4 col-md-offset-2 del-button">
+    </div>
+  </div>
+</div>

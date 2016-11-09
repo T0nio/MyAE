@@ -1,0 +1,9 @@
+fos_user_profile_show:
+    path: /
+    defaults:
+        _controller: FOSUserBundle:Profile:show
+
+fos_user_profile_edit:
+    path: /Modifier
+    defaults:
+        _controller: FOSUserBundle:Profile:edit

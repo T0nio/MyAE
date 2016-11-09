@@ -1,0 +1,125 @@
+body{
+    margin: 0;
+    height: 1000px;
+}
+
+#body-slim{
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.infosDate{
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.infosDiverses{
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td,
+.table > thead > tr > th,
+.table > tbody + tbody
+{
+    border: 0;
+}
+
+.table thead tr th.details{
+
+}
+
+.table thead tr th.quantity{
+    width: 75px;
+}
+
+.table thead tr th.pu{
+    width: 75px;
+}
+
+.table thead tr th.remise{
+    width: 75px;
+}
+
+.table thead tr th.total{
+    width: 100px;
+}
+
+.devis-empty{
+    height: 30px;
+}
+
+.devis-default{
+
+}
+
+.devis-title{
+    background: #DDD;
+    font-weight: bold;
+    color: #111;
+}
+
+.devis-subtotal{
+    background: #EEE;
+    font-weight: bold;
+}
+
+.devis-default td, .devis-subtotal td{
+    text-align: center;
+}
+
+.devis-title .title{
+    text-align: center;
+}
+
+
+.devis-default .title, .devis-subtotal .title{
+    text-align: right;
+}
+
+table thead tr th, table tfoot tr th{
+    text-align: center;
+}
+
+.table, .table thead tr th, .table tfoot tr th{
+    border: 1px solid black;
+}
+
+.table tbody tr td{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    min-height: 50px;
+}
+
+.table thead{
+    background: #004586;
+    color: white;
+}
+
+.table .devis-title{
+    background: #729FCF;
+}
+
+
+
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0.8em;
+}
+

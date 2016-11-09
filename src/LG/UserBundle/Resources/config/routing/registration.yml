@@ -1,0 +1,19 @@
+fos_user_registration_register:
+    path: /
+    defaults:
+        _controller: FOSUserBundle:Registration:register
+
+fos_user_registration_check_email:
+    path: /VerificationMail
+    defaults:
+        _controller: FOSUserBundle:Registration:checkEmail
+
+fos_user_registration_confirm:
+    path: /Confirmation/{token}
+    defaults:
+        _controller: FOSUserBundle:Registration:confirm
+
+fos_user_registration_confirmed:
+    path: /Confirmation/Terminee
+    defaults:
+        _controller: FOSUserBundle:Registration:confirmed

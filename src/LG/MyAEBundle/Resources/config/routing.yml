@@ -1,0 +1,13 @@
+home:
+    path: /
+    defaults:
+        _controller: LGMyAEBundle:Dashboard:index
+
+client_part:
+    resource: "@LGMyAEBundle/Resources/config/routing/client.yml"
+    prefix:   /Clients/
+
+devis_part:
+    resource: "@LGMyAEBundle/Resources/config/routing/devis.yml"
+    prefix:   /Devis/
+

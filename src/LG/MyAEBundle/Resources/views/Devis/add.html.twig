@@ -1,0 +1,374 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Devis - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des devis</h1>
+
+  <hr>
+  {% if addEdit == "add" %}
+    <h2>Ajout d'un devis</h2>
+  {% else %}
+    <h2>Modification d'un devis</h2>
+  {% endif %}
+
+  <div class="well">
+    {{ form_start(devisForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(devisForm) }}
+
+      <div class="row">
+
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(devisForm.client, "Client", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(devisForm.client, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(devisForm.client) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.client) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(devisForm.title, "Titre de la mission", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(devisForm.title, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(devisForm.title) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.title) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(devisForm.validity, "Durée de validité", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                <div class="input-group">
+                  {{ form_widget(devisForm.validity, {'attr': {'class': 'form-control'}}) }}
+                  <div class="input-group-addon"> jours</div>
+                </div>
+              </div>
+              {% if form_errors(devisForm.validity) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.validity) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(devisForm.markup, "Marge à déduire (ex: CdlC)", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                <div class="input-group">
+                  {{ form_widget(devisForm.markup, {'attr': {'class': 'form-control'}}) }}
+                  <div class="input-group-addon"> %</div>
+                </div>
+
+              </div>
+              {% if form_errors(devisForm.markup) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.markup) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(devisForm.description, "Description", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(devisForm.description, {'attr': {'class': ''}}) }}
+              </div>
+              {% if form_errors(devisForm.description) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.description) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4 control-label">
+              <label for="lg_myaebundle_devis_remisable">C'est négociable ?</label>
+              </div>
+              <div class="col-md-8">
+                {{form_widget(devisForm.remisable, {'attr': {'class': 'remisable'}})}}
+              </div>
+              {% if form_errors(devisForm.remisable) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(devisForm.remisable) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <h3 class="text-center">{{ form_label(devisForm.lignes) }}</h3>
+          </div>
+          <div class="col-md-12">{{ form_errors(devisForm.lignes) }}</div>
+
+        </div>
+
+
+        <table class="table" >
+          <thead>
+            <tr>
+              <th>Actions</th>
+              <th>Type</th>
+              <th>Titre</th>
+              <th>Quantité</th>
+              <th>PU</th>
+              <th class="thRemisable">Remise</th>
+              <th>Subtots</th>
+            </tr>
+          </thead>
+          <tbody  id="collectionContainer" data-prototype="
+                 {% filter escape %}
+                     {{ include('LGMyAEBundle:Ligne:prototype.html.twig', { 'form': devisForm.lignes.vars.prototype }) }}
+                 {% endfilter %}">
+            {% for ligne in devisForm.lignes %}
+              {{ include('LGMyAEBundle:Ligne:prototype.html.twig', { 'form': ligne }) }}
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+
+        <div class="form-group">
+          {# Ugluy debug. If not that "ligne" title appear #}
+          {{ form_widget(devisForm.lignes) }}
+          <div class="col-md-12 text-center"><a href="#" id="add_ligne" class="btn btn-default">Ajouter une ligne!</a></div>
+        </div>
+
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        <div class="form-group">
+        <div class="col-md-12 text-center">
+          {{ form_widget(devisForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+          </div>
+        </div>
+        {{ form_rest(devisForm) }}
+      </div>
+
+    {{ form_end(devisForm) }}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@js_jquery_ui' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{# Voici le script en question : #}
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $container = $('#collectionContainer');
+    var index = $container.find('.ligne').length;
+    $('#add_ligne').click(function(e) {
+      addLigne($container);
+      e.preventDefault();
+      return false;
+    });
+
+    if (index != 0) {
+      updateRemisable()
+      $container.children('.ligne').each(function() {
+        addDeleteLink($(this));
+        var id = $(this).find('.ordreHidden').val();
+        $(this).addClass('ligne-'+id);
+        updateLine(id, true)
+
+        $(this).find('.selectType').data('id', id);
+        $(this).find('.ordreHidden').data('id', id);
+      });
+    }
+
+    $container.sortable({
+      placeholder: "moving-empty",
+      update: function( event, ui ) {
+        var newIndex = 1;
+        $container.children('.ligne').each(function() {
+          $(this).find('.ordreHidden').val(newIndex);
+          $(this).find('.selectType').data('id', newIndex);
+          $(this).find('.ordreHidden').data('id', newIndex);
+          $(this).removeClass(($(this).attr('class').match(/ligne-[0-9]+/)[0]));
+          $(this).addClass('ligne-'+newIndex);
+
+          newIndex++;
+        });
+      }
+    });
+
+    $container.on('change','select', function(){
+      var id =  $(this).data('id');
+      updateLine(id, false)
+    });
+
+    $(".remisable").change(function(){
+        updateRemisable()
+    });
+
+    function updateRemisable(){
+      if($(".remisable").is(':checked')){
+          $(".thRemisable").show();
+           $container.children('.ligne').each(function() {
+            if($(this).find(".selectType").val() == "subtotal"){
+              if($(this).find(".tdRemisable").data("state") == "pu"){
+                var pu = $(this).find(".tdPu").html();
+                $(this).find(".tdPu").html($(this).find(".tdRemisable").html())
+                $(this).find(".tdRemisable").html(pu);
+                $(this).find(".tdRemisable").data("state", "remisable")
+              }
+            }
+              $(this).find('.tdRemisable').show();
+          });
+        }else{
+          $(".thRemisable").hide();
+          $container.children('.ligne').each(function() {
+            if($(this).find(".selectType").val() == "subtotal"){
+              if($(this).find(".tdRemisable").data("state") == "remisable"){
+                var pu = $(this).find(".tdPu").html();
+                $(this).find(".tdPu").html($(this).find(".tdRemisable").html())
+                $(this).find(".tdRemisable").html(pu);
+                $(this).find(".tdRemisable").data("state", "pu")
+              }
+
+            }
+              $(this).find('.tdRemisable').hide();
+          });
+        }
+    }
+
+    function resetRemisable(id){
+        var l = $(".ligne-"+id);
+        if(l.find(".tdRemisable").data("state") == "pu"){
+          var pu = l.find(".tdPu").html();
+          l.find(".tdPu").html(l.find(".tdRemisable").html())
+          l.find(".tdRemisable").html(pu);
+          l.find(".tdRemisable").data("state", "remisable")
+        }
+    }
+
+    function updateLine(id, first) {
+        var val = $(".ligne-"+id+" .selectType").val();
+
+        if(val == "empty"){
+          resetRemisable(id);
+          $(".ligne-"+id+" .inputTitle").val("0").hide();
+          $(".ligne-"+id+" .inputQuantity").val("0").hide();
+          $(".ligne-"+id+" .inputPu").val("0").hide();
+          $(".ligne-"+id+" .inputGroupRemise").hide();
+          $(".ligne-"+id+" .inputRemise").val("0");
+          $(".ligne-"+id+" .inputSubtotals").val("0").hide();
+        }else if(val == "subtotal"){
+          updateRemisable()
+          $(".ligne-"+id+" .inputTitle").show();
+          $(".ligne-"+id+" .inputQuantity").val("0").hide();
+          $(".ligne-"+id+" .inputPu").val("0").hide();
+          $(".ligne-"+id+" .inputGroupRemise").show();
+          $(".ligne-"+id+" .inputRemise").val("100");
+          if(first == false){
+            $(".ligne-"+id+" .inputSubtotals").val("").show();
+          }
+        }else if(val == "title"){
+          resetRemisable(id);
+          $(".ligne-"+id+" .inputTitle").show();
+          $(".ligne-"+id+" .inputQuantity").val("0").hide();
+          $(".ligne-"+id+" .inputPu").val("0").hide();
+          $(".ligne-"+id+" .inputGroupRemise").hide();
+          $(".ligne-"+id+" .inputRemise").val("0");
+          $(".ligne-"+id+" .inputSubtotals").val("0").hide();
+        }else if(val == "default"){
+          resetRemisable(id);
+          if(first == false){
+            $(".ligne-"+id+" .inputQuantity").val("").show();
+            $(".ligne-"+id+" .inputPu").val("").show();
+            $(".ligne-"+id+" .inputTitle").val("").show();
+            $(".ligne-"+id+" .inputGroupRemise").show();
+            $(".ligne-"+id+" .inputRemise").val("");
+            $(".ligne-"+id+" .inputSubtotals").val("").show();
+          }
+        }
+
+
+    };
+
+    function addLigne($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var template = $container.attr('data-prototype')
+        .replace(/__name__id__/g, (index+1))
+        .replace(/__name__/g,        index)
+      ;
+
+      var $prototype = $(template);
+      $prototype.find(".ordreHidden").val($prototype.find(".ordreHidden").data('value'));
+      $prototype.addClass('ligne-'+(index+1));
+      addDeleteLink($prototype);
+
+      $container.append($prototype);
+      updateRemisable()
+      index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      var $deleteLink = $('<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>');
+
+      $prototype.find(".del-button").append($deleteLink);
+
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+
+        e.preventDefault();
+        return false;
+      });
+    }
+  });
+</script>
+
+{% endblock %}

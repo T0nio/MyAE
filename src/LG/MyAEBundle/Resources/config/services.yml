@@ -1,0 +1,15 @@
+#services:
+#    lg_my_ae.example:
+#        class: LG\MyAEBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+services:
+    lg_my_ae.formater:
+        class: LG\MyAEBundle\Services\Formater\LGFormater
+
+    lg_my_ae.twig.formater_extension:
+        class: LG\MyAEBundle\Twig\FormaterExtension
+        arguments:
+            - "@lg_my_ae.formater"
+        tags:
+            -  { name: twig.extension }

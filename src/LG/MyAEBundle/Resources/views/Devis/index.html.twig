@@ -1,0 +1,48 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Devis - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des devis</h1>
+
+  <hr>
+
+  <h2>Liste des devis <span class="small"><a href="{{ path('devis_add')}}">Ajouter un devis</a></span></h2>
+
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Actions</th>
+        <th>Client</th>
+        <th>Nom</th>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Total TTC</th>
+        <th>Date validité</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in devis %}
+      <tr>
+        <td>
+          <a href="{{ path('devis_remove', {'id': d.id})}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a href="{{ path('devis_edit', {'id': d.id})}}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+          <a href="{{ path('devis_view', {'id': d.id})}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+          <a href="{{ path('devis_download_slug', {'slug': d.slug})}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+        </td>
+        <td>{{ d.client.name }}</td>
+        <td>{{ d.name }}</td>
+        <td>{{ d.title }}</td>
+        <td>{{ d.date|date('d/m/Y') }}</td>
+        <td>{{ d.totalTTC }}</td>
+        <td>{{ d.dateValidite|date('d/m/Y') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

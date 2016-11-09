@@ -1,0 +1,103 @@
+.small-alert{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-inverse .navbar-nav .active > a,
+.navbar-inverse .navbar-nav .active > a:hover,
+.navbar-inverse .navbar-nav .active > a:focus {
+  color: #fff;
+  background-color: #080808;
+}
+
+.moving-empty{
+    background: rgba(0,0,0,0.2);
+}
+
+
+#devisTable > thead > tr > th,
+#devisTable > tbody > tr > th,
+#devisTable > tfoot > tr > th,
+#devisTable > thead > tr > td,
+#devisTable > tbody > tr > td,
+#devisTable > tfoot > tr > td,
+#devisTable > thead > tr > th,
+#devisTable > tbody + tbody
+{
+    border: 0;
+}
+
+#devisTable thead tr th.details{
+
+}
+
+#devisTable thead tr th.quantity{
+    width: 75px;
+}
+
+#devisTable thead tr th.pu{
+    width: 75px;
+}
+
+#devisTable thead tr th.remise{
+    width: 75px;
+}
+
+#devisTable thead tr th.total{
+    width: 100px;
+}
+
+#devisTable .devis-empty{
+    height: 30px;
+}
+
+#devisTable .devis-default{
+
+}
+
+#devisTable .devis-title{
+    background: #DDD;
+    font-weight: bold;
+    color: #111;
+}
+
+#devisTable .devis-subtotal{
+    background: #EEE;
+    font-weight: bold;
+}
+
+#devisTable .devis-default td, #devisTable .devis-subtotal td{
+    text-align: center;
+}
+
+#devisTable .devis-title .title{
+    text-align: center;
+}
+
+
+#devisTable .devis-default .title, #devisTable .devis-subtotal .title{
+    text-align: right;
+}
+
+table thead tr th, table tfoot tr th{
+    text-align: center;
+}
+
+#devisTable, #devisTable thead tr th, #devisTable tfoot tr th{
+    border: 1px solid black;
+}
+
+#devisTable tbody tr td{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    min-height: 50px;
+}
+
+#devisTable thead{
+    background: #004586;
+    color: white;
+}
+
+#devisTable .devis-title{
+    background: #729FCF;
+}

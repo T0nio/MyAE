@@ -1,0 +1,38 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% extends "LGUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
+
+        <div class="form-group">
+            <label for="username">{{ 'security.login.username'|trans }}</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="Login" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">{{ 'security.login.password'|trans }}</label>
+            <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Password"/>
+        </div>
+
+        <div class="text-center">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans }}
+                </label>
+              </div>
+
+            <button type="submit" class="btn btn-default" id="_submit" name="_submit" >{{ 'security.login.submit'|trans }}</button>
+
+            <p><a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a></p>
+        </div>
+
+    </form>
+{% endblock %}

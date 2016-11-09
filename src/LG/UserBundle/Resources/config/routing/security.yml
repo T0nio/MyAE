@@ -1,0 +1,14 @@
+fos_user_security_login:
+    path: /Connexion
+    defaults:
+        _controller: FOSUserBundle:Security:login
+
+fos_user_security_check:
+    path: /Authentification
+    defaults:
+        _controller: FOSUserBundle:Security:check
+
+fos_user_security_logout:
+    path: /Deconnexion
+    defaults:
+        _controller: FOSUserBundle:Security:logout

@@ -1,0 +1,38 @@
+client_list:
+    path: /
+    defaults:
+        _controller: LGMyAEBundle:Client:index
+
+client_add:
+    path: /Ajouter/
+    defaults:
+        _controller: LGMyAEBundle:Client:add
+
+client_remove:
+    path: /Supprimer/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Client:remove
+    requirements:
+        id: \d+
+
+client_edit:
+    path: /Modifier/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Client:edit
+    requirements:
+        id: \d+
+
+client_view:
+    path: /Voir/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Client:view
+    requirements:
+        id: \d+
+
+#client_list:
+#    path: /{page}
+#    defaults:
+#        _controller: LGMyAEBundle:Client:index
+#        page: 1
+#    requirements:
+#        page: \d*

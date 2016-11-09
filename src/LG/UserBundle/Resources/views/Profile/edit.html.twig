@@ -1,0 +1,247 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier mon profil - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+    {% block fos_user_content %}
+
+  <div class="well">
+    {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit form-horizontal' } }) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.firstName, "Prénom", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.firstName) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.firstName) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.name, "Nom", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.name) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.name) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.email, "Email", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.email) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.email) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.markup, "Markup à déduire (charges sociales)", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                <div class="input-group">
+                  {{ form_widget(form.markup, {'attr': {'class': 'form-control'}}) }}
+                  <div class="input-group-addon"> %</div>
+                </div>
+              </div>
+              {% if form_errors(form.markup) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.markup) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.siren, "Numéro SIREN", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.siren, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.siren) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.siren) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.siret, "Numéro SIRET", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.siret, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.siret) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.siret) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.address, "Adresse", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.address) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.address) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.postalCode, "Code postal", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.postalCode) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.postalCode) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.city, "Ville", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.city) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.city) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.country, "Pays", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.country) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.country) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.plainPassword.first) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.plainPassword.first) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.plainPassword.second, "Confirmation de mot de passe", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.plainPassword.second) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.plainPassword.second) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+              <input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}" />
+            </div>
+        </div>
+{{ form_rest(form) }}
+
+            <div>
+
+
+            </div>
+    </div>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

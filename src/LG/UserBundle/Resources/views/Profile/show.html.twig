@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Voir mon profil - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+    {% block fos_user_content %}
+<div class="fos_user_user_show">
+    <h2>{{ user.firstName }} {{ user.name }} - <small><a href="{{ path('fos_user_profile_edit') }}">Modifier mon profil</a></small></h2>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    <p>Siren: {{ user.siren }}</p>
+    <p>Siret: {{ user.siret }}</p>
+    <p>Charges: {{ user.markup }}%</p>
+    <p>Adresse: {{ user.address }} - {{ user.postalCode }} {{ user.city }} {{ user.country }}</p>
+</div>
+{% endblock fos_user_content %}
+{% endblock lgmyae_body %}

@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    height: 1000px;
+    height: 1400px;
 }
 
 #body-slim{
@@ -104,12 +104,12 @@ table thead tr th, table tfoot tr th{
 }
 
 .table thead{
-    background: #004586;
+    background: #004586 !important;
     color: white;
 }
 
 .table .devis-title{
-    background: #729FCF;
+    background: #729FCFi !important;
 }
 
 

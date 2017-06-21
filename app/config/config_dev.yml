@@ -32,3 +32,15 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:    "/data/Downloads/wkhtmltox/bin/wkhtmltopdf"
+        options:
+            no-outline: true
+            encoding: UTF-8
+    image:
+        enabled:    true
+        binary:     "/usr/bin/xvfb-run /usr/local/bin/wkhtmltoimage"
+        options:    []

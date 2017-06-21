@@ -25,8 +25,8 @@
   </ul>
 </li>
 <li>
-  <a href="javascript:;" data-toggle="collapse" data-target="#client" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Devis <i class="fa fa-fw fa-caret-down"></i></a>
-  <ul id="client" class="collapse in" aria-expanded="true" style="">
+  <a href="javascript:;" data-toggle="collapse" data-target="#devis" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Devis <i class="fa fa-fw fa-caret-down"></i></a>
+  <ul id="devis" class="collapse in" aria-expanded="true" style="">
     {% if app.request.attributes.get('_route') == 'devis_list' %}
     <li class="active">
     {% else %}
@@ -40,6 +40,25 @@
     <li>
     {% endif %}
       <a href="{{ path('devis_add') }}">Créer</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="javascript:;" data-toggle="collapse" data-target="#facture" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Factures <i class="fa fa-fw fa-caret-down"></i></a>
+  <ul id="facture" class="collapse in" aria-expanded="true" style="">
+    {% if app.request.attributes.get('_route') == 'facture_list' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('facture_list') }}">Liste</a>
+    </li>
+    {% if app.request.attributes.get('_route') == 'facture_add' %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+      <a href="{{ path('facture_add') }}">Créer</a>
     </li>
   </ul>
 </li>

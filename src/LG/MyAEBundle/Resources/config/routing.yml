@@ -11,3 +11,8 @@ devis_part:
     resource: "@LGMyAEBundle/Resources/config/routing/devis.yml"
     prefix:   /Devis/
 
+
+facture_part:
+    resource: "@LGMyAEBundle/Resources/config/routing/facture.yml"
+    prefix:   /Facture/
+

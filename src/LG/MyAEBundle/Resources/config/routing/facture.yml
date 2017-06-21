@@ -1,0 +1,72 @@
+facture_list:
+    path: /{page}
+    defaults:
+        _controller: LGMyAEBundle:Facture:index
+        page: 1
+    requirements:
+        page: \d*
+
+facture_add:
+    path: /Creer/
+    defaults:
+        _controller: LGMyAEBundle:Facture:add
+
+
+facture_add_with_slug:
+    path: /Creer/{clientSlug}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:add
+
+facture_remove:
+    path: /Supprimer/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:remove
+    requirements:
+        id: \d+
+
+facture_edit:
+    path: /Modifier/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:edit
+    requirements:
+        id: \d+
+
+facture_view_pdf:
+    path: /Afficher/PDF/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:download
+        mode: id
+        inline: true
+    requirements:
+        id: \d+
+
+facture_view_pdf_slug:
+    path: /Afficher/PDF/{slug}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:download
+        mode: slug
+        inline: true
+
+facture_view:
+    path: /Afficher/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:view
+    requirements:
+        id: \d+
+
+facture_download:
+    path: /Telecharger/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:download
+        mode: id
+        inline: false
+    requirements:
+        id: \d+
+
+facture_download_slug:
+    path: /Telecharger/{slug}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:download
+        mode: slug
+        inline: false
+

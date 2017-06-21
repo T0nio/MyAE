@@ -32,6 +32,12 @@ class Client
     private $deviss;
 
     /**
+    * @ORM\OneToMany(targetEntity="LG\MyAEBundle\Entity\Facture", mappedBy="client", cascade={"remove", "persist"})
+    * @Assert\Valid()
+    */
+    private $factures;
+
+    /**
      * @var string $ownedBy
      *
      * @Gedmo\Blameable(on="create")

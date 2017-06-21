@@ -18,6 +18,11 @@ class Ligne
     private $devis;
 
     /**
+    * @ORM\ManyToOne(targetEntity="LG\MyAEBundle\Entity\Facture", inversedBy="lignes")
+    */
+    private $facture;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -276,6 +281,30 @@ class Ligne
     public function getDevis()
     {
         return $this->devis;
+    }
+
+    /**
+     * Set facture
+     *
+     * @param \LG\MyAEBundle\Entity\Devis $devis
+     *
+     * @return Ligne
+     */
+    public function setFacture(\LG\MyAEBundle\Entity\Facture $facture)
+    {
+        $this->facture = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Get facture
+     *
+     * @return \LG\MyAEBundle\Entity\Facture
+     */
+    public function getFacture()
+    {
+        return $this->facture;
     }
 
     public function getTotal()

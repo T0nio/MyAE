@@ -1,0 +1,88 @@
+{% extends "LGMyAEBundle::layout.html.twig" %}
+
+{% block title %}
+  Facture n°{{ facture.factureNumber }} - {{ parent() }}
+{% endblock %}
+
+{% block lgmyae_body %}
+
+  <h1 class="testAssetic">Gestion des facture <span class="small"><a href="{{ path('facture_list')}}">Retour à la liste des factures</a></span></h1>
+
+  <hr>
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+        <h2>Facture n°{{ facture.factureNumber }}  - <small><a href="{{ path('facture_view_pdf_slug', {'slug': facture.slug})}}"><i class="fa fa-eye" aria-hidden="true"></i> Voir le PDF</a> - <a href="{{ path('facture_download_slug', {'slug': facture.slug})}}"><i class="fa fa-download" aria-hidden="true"></i> Télécharger le PDF</a> - <a href="{{ path('facture_edit', {'id': facture.id})}}"><i class="fa fa-edit" aria-hidden="true"></i> Modifier la facture</a></small></h2>
+
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Client : </strong> {{ facture.client.name }}<br>
+        <strong>Date : </strong> {{ facture.date|date("d/m/Y") }}<br>
+        <strong>Date du paiement : </strong> {{ facture.paiementDate|date("d/m/Y") }}<br>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Fin de la presta : </strong> {{ facture.prestationDate|date("d/m/Y") }}<br>
+        <strong>Début des pénalités : </strong> {{ facture.penaliteDate|date("d/m/Y") }}<br>
+        <strong>Taux des pénalités : </strong> {{ facture.penaliteTaux }}%<br>
+      </p>
+    </div>
+    <div class="col-md-12">
+      <h3>Lignes</h3>
+        <table class="table table-condensed table-bordered" id="devisTable">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Quantité</th>
+              <th>PU</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+                <th class="text-right" colspan="3">Total</th>
+              <th>{{ facture.totalTTC }} €</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for ligne in facture.lignes %}
+                    {% if ligne.type == "empty" %}
+                        <tr class="devis-empty">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                        </tr>
+                    {% elseif ligne.type == "title" %}
+                        <tr class="devis-title">
+                          <td class="title">{{ ligne.title }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                        </tr>
+                    {% elseif ligne.type == "subtotal" %}
+                        <tr class="devis-subtotal">
+                          <td class="title">{{ ligne.title }}</td>
+                                <td></td>
+                                <td></td>
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% elseif ligne.type == "default" %}
+                        <tr class="devis-default">
+                          <td class="title">{{ ligne.title }}</td>
+                          <td>{{ ligne.quantity }}</td>
+                          <td>{{ ligne.pu }} €</td>
+                          <td>{{ ligne.total }} €</td>
+                        </tr>
+                    {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+{% endblock %}

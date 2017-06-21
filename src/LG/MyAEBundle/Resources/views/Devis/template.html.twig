@@ -75,9 +75,9 @@
             <tfoot>
                 <tr>
                     {% if devis.remisable %}
-                        <th class="text-right" colspan="4">Total TTC</th>
+                        <th class="text-right" colspan="4">Total HT</th>
                     {% else %}
-                        <th class="text-right" colspan="3">Total TTC</th>
+                        <th class="text-right" colspan="3">Total HT</th>
                     {% endif %}
                     <th>{{ devis.totalTTC }} €</th>
                 </tr>
@@ -140,11 +140,12 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="infosDiverses">
-            Paiement: virement sous 30 jours
-        </div>
         <div class="legal">
             TVA non applicable - article 293 B du CGI
+        </div>
+
+        <div class="infosDiverses">
+            Paiement: virement sous 30 jours
         </div>
         <footer class="text-center">
             {{ devis.ownedBy.firstName }} {{ devis.ownedBy.name }} - {{ devis.ownedBy.address }} {{ devis.ownedBy.postalCode}} {{ devis.ownedBy.city }} {{ devis.ownedBy.country }} - SIRET : {{ devis.ownedBy.siret }} - Email : {{ devis.ownedBy.email }}

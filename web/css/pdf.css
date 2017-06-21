@@ -1,6 +1,7 @@
 body{
     margin: 0;
-    height: 1400px;
+    height: 100%;
+    min-height: 1403px;
 }
 
 #body-slim{
@@ -17,6 +18,10 @@ h1{
     margin-top: 20px;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.factureDispense{
+    margin-top: 20px;
 }
 
 .infosDiverses{
@@ -104,16 +109,17 @@ table thead tr th, table tfoot tr th{
 }
 
 .table thead{
-    background: #004586 !important;
+    background: #004586;
     color: white;
 }
 
 .table .devis-title{
-    background: #729FCFi !important;
+    background: #729FCF;
 }
 
-
-
+.legal{
+    text-align: right;
+}
 
 footer{
     position: absolute;
@@ -122,4 +128,3 @@ footer{
     right: 0;
     font-size: 0.8em;
 }
-

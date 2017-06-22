@@ -23,6 +23,11 @@ class ProfileFormType extends AbstractType
             ->add('city',               TextType::class)
             ->add('country',            CountryType::class)
             ->add('markup',             NumberType::class)
+            ->add('banque',             TextType::class)
+            ->add('guichet',            TextType::class)
+            ->add('compte',             TextType::class)
+            ->add('cle',                TextType::class)
+            ->add('IBAN',               TextType::class)
             ->remove('username')
             ;
     }

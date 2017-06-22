@@ -31,6 +31,8 @@ class FactureController extends Controller
         $facture = new Facture();
         $factureForm = $this->createForm(FactureType::class, $facture);
 
+        // Check if client have a facturation address.
+
 
         if ($request->isMethod('POST') && $factureForm->handleRequest($request)->isValid()) {
             $formater = $this->container->get('lg_my_ae.formater');
@@ -59,10 +61,11 @@ class FactureController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $last = $em->getRepository("LGMyAEBundle:Facture")->findOneBy(
+                    array('ownedBy' => $this->getUser()),
                     array('facture_number' => 'DESC')
             );
             if($last){
-                $number = $last->getFactureNumber + 1;
+                $number = $last->getFactureNumber() + 1;
             }else{
                 $number = 123;
             }
@@ -85,23 +88,25 @@ class FactureController extends Controller
     }
 
 
-    /* TO EDIT */
     public function removeAction(Request $request, $id)
     {
+        throw new NotFoundHttpException("Vous ne pouvez pas supprimer une facture.");
+        return false;        
+
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('LGMyAEBundle:Devis');
+        $repository = $em->getRepository('LGMyAEBundle:Facture');
 
-        $devis = $repository->find($id);
+        $facture = $repository->find($id);
 
-        if (null === $devis) {
-          throw new NotFoundHttpException("Le devis d'id ".$id." n'existe pas.");
+        if (null === $facture) {
+          throw new NotFoundHttpException("La facture d'id ".$id." n'existe pas.");
         }
-        $em->remove($devis);
+        $em->remove($facture);
         $em->flush();
 
-        $request->getSession()->getFlashBag()->add('info', 'Le devis '.$devis->getName().' a bien été supprimé.');
+        $request->getSession()->getFlashBag()->add('info', 'La facture numéro '.$facture->getFactureNumber().' a bien été supprimé.');
 
-        return $this->redirectToRoute('devis_list');
+        return $this->redirectToRoute('facture_list');
     }
 
 

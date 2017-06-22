@@ -4,12 +4,16 @@ namespace LG\MyAEBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Facture
  *
  * @ORM\Table(name="facture")
  * @ORM\Entity(repositoryClass="LG\MyAEBundle\Repository\FactureRepository")
+ * @UniqueEntity(fields="facture_number", message="Tu as déjà une facture avec ce numéro.")
  */
 class Facture
 {
@@ -63,6 +67,20 @@ class Facture
      * @ORM\Column(name="totalTTC", type="float")
      */
     private $totalTTC;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="accompte", type="float")
+     */
+    private $accompte;
 
     /**
      * @var \DateTime
@@ -404,4 +422,69 @@ class Facture
         return $this->penalite_taux;
     }
 
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if(!$this->getClient()->getFacturationAddress()){
+            $context->buildViolation("Le client selectionné n'a pas d'adresse de facturation définie")
+                ->atPath('client')
+                ->addViolation();
+        }
+    }
+
+    public function getNetAPayer(){
+        return $this->totalTTC - $this->accompte;
+    }
+
+
+
+    /**
+     * Set accompte
+     *
+     * @param float $accompte
+     *
+     * @return Facture
+     */
+    public function setAccompte($accompte)
+    {
+        $this->accompte = $accompte;
+
+        return $this;
+    }
+
+    /**
+     * Get accompte
+     *
+     * @return float
+     */
+    public function getAccompte()
+    {
+        return $this->accompte;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Facture
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

@@ -4,12 +4,16 @@ namespace LG\MyAEBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Facture
  *
  * @ORM\Table(name="facture")
  * @ORM\Entity(repositoryClass="LG\MyAEBundle\Repository\FactureRepository")
+ * @UniqueEntity(fields="facture_number", message="Tu as déjà une facture avec ce numéro.")
  */
 class Facture
 {
@@ -65,6 +69,20 @@ class Facture
     private $totalTTC;
 
     /**
+     * @var text
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="accompte", type="float")
+     */
+    private $accompte;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="paiement_date", type="datetime")
@@ -103,6 +121,11 @@ class Facture
     public function __construct()
     {
         $this->date = new \Datetime();
+        $this->prestation_date = new \Datetime();
+        $this->paiement_date = new \Datetime();
+        $this->penalite_taux = 20;
+        $this->penalite_date = new \Datetime();
+        $this->penalite_date->add(\DateInterval::createFromDateString('1 month'));
     }
 
 
@@ -114,78 +137,6 @@ class Facture
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Facture
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Facture
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Facture
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -213,30 +164,6 @@ class Facture
     }
 
     /**
-     * Set validity
-     *
-     * @param integer $validity
-     *
-     * @return Facture
-     */
-    public function setValidity($validity)
-    {
-        $this->validity = $validity;
-
-        return $this;
-    }
-
-    /**
-     * Get validity
-     *
-     * @return int
-     */
-    public function getValidity()
-    {
-        return $this->validity;
-    }
-
-    /**
      * Set totalTTC
      *
      * @param float $totalTTC
@@ -258,30 +185,6 @@ class Facture
     public function getTotalTTC()
     {
         return $this->totalTTC;
-    }
-
-    /**
-     * Set markup
-     *
-     * @param float $markup
-     *
-     * @return Facture
-     */
-    public function setMarkup($markup)
-    {
-        $this->markup = $markup;
-
-        return $this;
-    }
-
-    /**
-     * Get markup
-     *
-     * @return float
-     */
-    public function getMarkup()
-    {
-        return $this->markup;
     }
 
     public function getDateValidite()
@@ -398,28 +301,166 @@ class Facture
         return $this->lignes;
     }
 
+
     /**
-     * Set remisable
+     * Set paiementDate
      *
-     * @param boolean $remisable
+     * @param \DateTime $paiementDate
      *
      * @return Facture
      */
-    public function setRemisable($remisable)
+    public function setPaiementDate($paiementDate)
     {
-        $this->remisable = $remisable;
+        $this->paiement_date = $paiementDate;
 
         return $this;
     }
 
     /**
-     * Get remisable
+     * Get paiementDate
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getRemisable()
+    public function getPaiementDate()
     {
-        return $this->remisable;
+        return $this->paiement_date;
     }
 
+    /**
+     * Set prestationDate
+     *
+     * @param \DateTime $prestationDate
+     *
+     * @return Facture
+     */
+    public function setPrestationDate($prestationDate)
+    {
+        $this->prestation_date = $prestationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get prestationDate
+     *
+     * @return \DateTime
+     */
+    public function getPrestationDate()
+    {
+        return $this->prestation_date;
+    }
+
+    /**
+     * Set penaliteDate
+     *
+     * @param \DateTime $penaliteDate
+     *
+     * @return Facture
+     */
+    public function setPenaliteDate($penaliteDate)
+    {
+        $this->penalite_date = $penaliteDate;
+
+        return $this;
+    }
+
+    /**
+     * Get penaliteDate
+     *
+     * @return \DateTime
+     */
+    public function getPenaliteDate()
+    {
+        return $this->penalite_date;
+    }
+
+    /**
+     * Set factureNumber
+     *
+     * @param integer $factureNumber
+     *
+     * @return Facture
+     */
+    public function setFactureNumber($factureNumber)
+    {
+        $this->facture_number = $factureNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get factureNumber
+     *
+     * @return integer
+     */
+    public function getFactureNumber()
+    {
+        return $this->facture_number;
+    }
+
+    /**
+     * Set penaliteTaux
+     *
+     * @param float $penaliteTaux
+     *
+     * @return Facture
+     */
+    public function setPenaliteTaux($penaliteTaux)
+    {
+        $this->penalite_taux = $penaliteTaux;
+
+        return $this;
+    }
+
+    /**
+     * Get penaliteTaux
+     *
+     * @return float
+     */
+    public function getPenaliteTaux()
+    {
+        return $this->penalite_taux;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if(!$this->getClient()->getFacturationAddress()){
+            $context->buildViolation("Le client selectionné n'a pas d'adresse de facturation définie")
+                ->atPath('client')
+                ->addViolation();
+        }
+    }
+
+    public function getNetAPayer(){
+        return $this->totalTTC - $this->accompte;
+    }
+
+
+
+    /**
+     * Set accompte
+     *
+     * @param float $accompte
+     *
+     * @return Facture
+     */
+    public function setAccompte($accompte)
+    {
+        $this->accompte = $accompte;
+
+        return $this;
+    }
+
+    /**
+     * Get accompte
+     *
+     * @return float
+     */
+    public function getAccompte()
+    {
+        return $this->accompte;
+    }
 }

@@ -30,11 +30,17 @@ class FactureType extends AbstractType
           ->add('client', EntityType::class, array(
               'class' => 'LGMyAEBundle:Client',
               'choice_label' => 'name',
-          ))
+          ))            
+          ->add('type',               ChoiceType::class, array(
+                'choices'   => array(
+                    'Facture'       => 'Facture',
+                    'Accompte'         => 'Accompte',
+              )))
           ->add('paiement_date' ,   DateType::class)
           ->add('prestation_date' , DateType::class)
           ->add('penalite_date' ,   DateType::class)
           ->add('penalite_taux',    TextType::class)
+          ->add('accompte',         TextType::class)
           ->add('lignes',       CollectionType::class, array(
             'entry_type'   =>   LigneType::class,
             'allow_add'    =>   true,

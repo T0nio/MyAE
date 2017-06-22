@@ -78,12 +78,48 @@ class User extends BaseUser
      * @ORM\Column(name="postalCode", type="string", length=255)
      */
     private $postalCode = "";
+    
     /**
      * @var float
      *
      * @ORM\Column(name="markup", type="float")
      */
     private $markup = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="banque", type="string", length=255)
+     */
+    private $banque = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="guichet", type="string", length=255)
+     */
+    private $guichet = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="compte", type="string", length=255)
+     */
+    private $compte = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cle", type="string", length=255)
+     */
+    private $cle = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="IBAN", type="string", length=255)
+     */
+    private $IBAN = "";
 
 
     /**
@@ -311,5 +347,125 @@ class User extends BaseUser
     public function getMarkup()
     {
         return $this->markup;
+    }
+
+    /**
+     * Set banque
+     *
+     * @param string $banque
+     *
+     * @return User
+     */
+    public function setBanque($banque)
+    {
+        $this->banque = $banque;
+
+        return $this;
+    }
+
+    /**
+     * Get banque
+     *
+     * @return string
+     */
+    public function getBanque()
+    {
+        return $this->banque;
+    }
+
+    /**
+     * Set guichet
+     *
+     * @param string $guichet
+     *
+     * @return User
+     */
+    public function setGuichet($guichet)
+    {
+        $this->guichet = $guichet;
+
+        return $this;
+    }
+
+    /**
+     * Get guichet
+     *
+     * @return string
+     */
+    public function getGuichet()
+    {
+        return $this->guichet;
+    }
+
+    /**
+     * Set compte
+     *
+     * @param string $compte
+     *
+     * @return User
+     */
+    public function setCompte($compte)
+    {
+        $this->compte = $compte;
+
+        return $this;
+    }
+
+    /**
+     * Get compte
+     *
+     * @return string
+     */
+    public function getCompte()
+    {
+        return $this->compte;
+    }
+
+    /**
+     * Set cle
+     *
+     * @param string $cle
+     *
+     * @return User
+     */
+    public function setCle($cle)
+    {
+        $this->cle = $cle;
+
+        return $this;
+    }
+
+    /**
+     * Get cle
+     *
+     * @return string
+     */
+    public function getCle()
+    {
+        return $this->cle;
+    }
+
+    /**
+     * Set iBAN
+     *
+     * @param string $iBAN
+     *
+     * @return User
+     */
+    public function setIBAN($iBAN)
+    {
+        $this->IBAN = $iBAN;
+
+        return $this;
+    }
+
+    /**
+     * Get iBAN
+     *
+     * @return string
+     */
+    public function getIBAN()
+    {
+        return $this->IBAN;
     }
 }

@@ -47,6 +47,14 @@
                 <th class="text-right" colspan="3">Total</th>
               <th>{{ facture.totalTTC }} €</th>
             </tr>
+            <tr>
+              <th class="text-right" colspan="3">(-) Accompte</th>
+              <th>{{ facture.accompte }} €</th>
+          </tr>
+          <tr>
+              <th class="text-right" colspan="3">Net à payer</th>
+              <th>{{ facture.netAPayer }} €</th>
+          </tr>
           </tfoot>
           <tbody>
             {% for ligne in facture.lignes %}

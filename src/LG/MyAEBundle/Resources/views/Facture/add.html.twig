@@ -44,6 +44,25 @@
 
           <div class="col-md-6">
             <div class="row">
+                {{ form_label(factureForm.type, "Type", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(factureForm.type, {'attr': {'class': ''}}) }}
+              </div>
+              {% if form_errors(factureForm.type) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(factureForm.type) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-4">
+            <div class="row">
                 {{ form_label(factureForm.paiement_date, "Date du paiement", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
               <div class="col-md-8">
                 {{ form_widget(factureForm.paiement_date, {'attr': {'class': ''}}) }}
@@ -58,10 +77,7 @@
 
             </div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="row">
                 {{ form_label(factureForm.prestation_date, "Date de réalisation de la presta", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
               <div class="col-md-8">
@@ -78,7 +94,7 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="row">
                 {{ form_label(factureForm.penalite_date, "Date de début de pénalités", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
               <div class="col-md-8">
@@ -111,6 +127,26 @@
                 <div class="col-md-8 col-md-push-4">
                   <div class="alert alert-warning small-alert" role="alert">
                     {{ form_errors(factureForm.penalite_taux) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(factureForm.accompte, "Accompte déposé", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                <div class="input-group">
+                  {{ form_widget(factureForm.accompte, {'attr': {'class': 'form-control'}}) }}
+                  <div class="input-group-addon"> €</div>
+                </div>
+
+              </div>
+              {% if form_errors(factureForm.accompte) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(factureForm.accompte) }}
                   </div>
                 </div>
               {% endif %}

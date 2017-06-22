@@ -192,6 +192,92 @@
                   </div>
                 </div>
               {% endif %}
+            </div>
+          </div>
+        </div>
+        <h3 class="text-center">Informations bancaires</h3>
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.banque, "Numéro de banque", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.banque, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.banque) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.banque) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.guichet, "Numéro de guichet", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.guichet, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.guichet) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.guichet) }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.compte, "Numéro de compte", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.compte, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.compte) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.compte) }}
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.cle, "Clé RIB", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.cle, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.cle) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.cle) }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6">
+            <div class="row">
+                {{ form_label(form.IBAN, "IBAN", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+              <div class="col-md-8">
+                {{ form_widget(form.IBAN, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              {% if form_errors(form.IBAN) is not empty %}
+                <div class="col-md-8 col-md-push-4">
+                  <div class="alert alert-warning small-alert" role="alert">
+                    {{ form_errors(form.IBAN) }}
+                  </div>
+                </div>
+              {% endif %}
 
             </div>
           </div>

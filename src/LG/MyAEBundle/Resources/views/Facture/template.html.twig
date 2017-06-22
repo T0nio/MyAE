@@ -37,8 +37,13 @@
                 <p>
                     <strong>Au nom et pour le compte de</strong><br>
                     {{ facture.ownedBy.firstName }} {{ facture.ownedBy.name }}<br>
+                    <br>
                     {{ facture.ownedBy.address }}<br>
-                    {{ facture.ownedBy.postalCode}} {{ facture.ownedBy.city }}
+                    {{ facture.ownedBy.postalCode}} {{ facture.ownedBy.city }}<br>
+                    {{ facture.ownedBy.country }}
+                </p>
+                <p class="text-justify">
+                    Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)
                 </p>
             </div>
             <div class="col-xs-4"></div>
@@ -47,16 +52,26 @@
                     <strong>A l'attention de </strong><br>
                     {{ facture.client.referentName }}<br>
                     {{ facture.client.name }}<br>
+                    <br>
+                    {{ facture.client.facturationAddress.address}}<br>
+                    {% if facture.client.facturationAddress.additonalAddress is not empty %}
+                        {{ facture.client.facturationAddress.additonalAddress}}<br>
+                    {% endif %}
+                    {{ facture.client.facturationAddress.postalCode}} {{ facture.client.facturationAddress.city}}<br>
+                    {{ facture.client.facturationAddress.country|upper}}<br>
 
                 </p>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6 factureDispense">Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM)<br></div>
-            <div class="col-xs-6 text-right infosDate">Date: {{ facture.date|date('d/m/Y') }}</div>
+            <div class="col-xs-12 text-right infosDate">Date: {{ facture.date|date('d/m/Y') }}</div>
         </div>
         <div class="description">
-            <h2 class="text-center">Facture n°{{ facture.factureNumber }}</h2>
+            {% if facture.type == "Accompte" %}
+                <h2 class="text-center">Facture d'accompte n°{{ facture.factureNumber }}</h2>
+            {% else %}
+                <h2 class="text-center">Facture n°{{ facture.factureNumber }}</h2>
+            {% endif %}
         </div>
         <table class="table table-condensed">
             <thead>
@@ -68,9 +83,34 @@
                 </tr>
             </thead>
             <tfoot>
+                <tr>
+                    {% if facture.type == "Accompte" %}
+                        <th rowspan="2" class="paiementConditions text-left">
+                        Démarrage de la prestation à la confirmation du paiement de l'accompte<br>
+                    {% else %}
+                        <th rowspan="3" class="paiementConditions text-left">
+                        Paiement à 30 jours dès réception de la facture.<br>
+                    {% endif %}
 
-                    <th class="text-right" colspan="3">Total HT</th>
+                        
+                    <span>
+                        <strong style="font-size: 1.2em;">Coordonnées bancaires:</strong><br>
+                        <strong>Banque:</strong> {{facture.ownedBy.banque}} <strong>Guichet:</strong> {{facture.ownedBy.guichet}} <strong>Numéro de compte:</strong> {{facture.ownedBy.compte}} <strong>Clé:</strong> {{facture.ownedBy.cle}}<br>
+                        <strong>IBAN:</strong> {{facture.ownedBy.IBAN}}
+                    </span>
+                    </th>
+                    <th class="text-right" colspan="2">Total HT</th>
                     <th>{{ facture.totalTTC }} €</th>
+                </tr>
+                {% if facture.type != "Accompte" %}
+                <tr>
+                    <th class="text-right" colspan="2">(-) Accompte</th>
+                    <th>{{ facture.accompte }} €</th>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th class="text-right" colspan="2" style="vertical-align: middle;">Net à payer</th>
+                    <th style="vertical-align: middle;">{{ facture.netAPayer }} €</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -112,19 +152,23 @@
             TVA non applicable - article 293 B du CGI
         </div>
         <div class="row infos">
-            <div class="col-xs-4 myPart">
+            <div class="col-xs-8 myPart">
                 <p>
-                    Date de réglement: {{ facture.paiementDate|date('d/m/Y') }}<br>
-                    Date d'execution de la prestation: {{ facture.prestationDate|date('d/m/Y') }}
+                    {% if facture.type != "Accompte" %}
+                    Date d'execution de la prestation: {{ facture.prestationDate|date('d/m/Y') }}<br>
+                    {% endif %} 
+                    <!--
+                    Date de réglement: {{ facture.paiementDate|date('d/m/Y') }}  
+                    -->                  
                 </p>
             </div>
-            <div class="col-xs-4"></div>
+            <!--<div class="col-xs-4"></div>
             <div class="col-xs-4 text-right">
                 <p>
                     Taux de pénalités à compter du: {{ facture.penaliteDate|date('d/m/Y') }}
                     en l'absence de paiment: {{ facture.penaliteTaux }}% 
                 </p>
-            </div>
+            </div>-->
         </div>
         <footer class="text-center">
             {{ facture.ownedBy.firstName }} {{ facture.ownedBy.name }} - {{ facture.ownedBy.address }} {{ facture.ownedBy.postalCode}} {{ facture.ownedBy.city }} {{ facture.ownedBy.country }} - SIRET : {{ facture.ownedBy.siret }} - Email : {{ facture.ownedBy.email }}

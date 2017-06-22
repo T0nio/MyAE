@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-md-12">
         <h2>{{ devis.name }}  - <small><a href="{{ path('devis_view_pdf_slug', {'slug': devis.slug})}}"><i class="fa fa-eye" aria-hidden="true"></i> Voir le PDF</a> - <a href="{{ path('devis_download_slug', {'slug': devis.slug})}}"><i class="fa fa-download" aria-hidden="true"></i> Télécharger le PDF</a> - <a href="{{ path('devis_edit', {'id': devis.id})}}"><i class="fa fa-edit" aria-hidden="true"></i> Modifier le devis</a></small></h2>
-
+        <h2><small><a href="{{ path('facture_accompte_add_from_devis', {'id': devis.id})}}"><i class="fa fa-eye" aria-hidden="true"></i> Créer une facture d'accompte</a> - <a href="{{ path('facture_add_from_devis', {'id': devis.id})}}"><i class="fa fa-eye" aria-hidden="true"></i> Créer une facture</a></small></h2>
     </div>
     <div class="col-md-6">
       <p>

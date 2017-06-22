@@ -11,11 +11,30 @@ facture_add:
     defaults:
         _controller: LGMyAEBundle:Facture:add
 
-
 facture_add_with_slug:
     path: /Creer/{clientSlug}/
     defaults:
         _controller: LGMyAEBundle:Facture:add
+
+facture_add_from_devis:
+    path: /Creer/DepuisDevis/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:add
+        mode: facture
+        inline: false
+    requirements:
+        id: \d+
+
+
+facture_accompte_add_from_devis:
+    path: /Creer/Accompte/DepuisDevis/{id}/
+    defaults:
+        _controller: LGMyAEBundle:Facture:add
+        mode: accompte
+        inline: false
+    requirements:
+        id: \d+
+
 
 facture_remove:
     path: /Supprimer/{id}/
@@ -69,4 +88,3 @@ facture_download_slug:
         _controller: LGMyAEBundle:Facture:download
         mode: slug
         inline: false
-

@@ -5,6 +5,7 @@ namespace LG\MyAEBundle\Controller;
 use LG\MyAEBundle\Entity\Client;
 use LG\MyAEBundle\Entity\Address;
 use LG\MyAEBundle\Entity\Devis;
+use LG\MyAEBundle\Entity\Ligne;
 use LG\MyAEBundle\Entity\Facture;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,7 @@ class FactureController extends Controller
         ));
     }
 
-    public function addAction(Request $request, $clientSlug)
+    public function addAction(Request $request, $clientSlug, $mode, $id)
     {
         $facture = new Facture();
         $factureForm = $this->createForm(FactureType::class, $facture);
@@ -80,7 +81,40 @@ class FactureController extends Controller
             return $this->redirectToRoute('facture_view', array('id' => $facture->getId()));
         }
 
+        if($mode == "accompte" && $id){
+            $em = $this->getDoctrine()->getManager();
+            $devis = $em->getRepository("LGMyAEBundle:Devis")->findOneBy(
+                    array('id' => $id)
+            );
+            $facture->setType("Accompte");
+            $ligne = new Ligne();
+            $ligne->setType("default");
+            $ligne->setTitle("Accompte associé au devis ".$devis->getName());
+            $ligne->setQuantity(1);
+            $ligne->setPu(ceil($devis->getTotalTTC() * 0.3));
+            $facture->addLigne($ligne);
+        }elseif($mode == "facture" && $id){
+            $em = $this->getDoctrine()->getManager();
+            $devis = $em->getRepository("LGMyAEBundle:Devis")->findOneBy(
+                    array('id' => $id)
+            );
 
+            foreach($devis->getLignes() as $ligne){
+                $newLine = new Ligne();
+                $newLine->setType($ligne->getType());
+                $newLine->setTitle($ligne->getTitle());
+                $newLine->setQuantity($ligne->getQuantity());
+                $newLine->setPu(ceil($ligne->getPu() * (100-$ligne->getRemise()) / 100));
+                $newLine->setSubtotals($ligne->getSubtotals());
+                $newLine->setSubtotals($ligne->getSubtotals());
+                $newLine->setOrdre($ligne->getOrdre());
+                $facture->addLigne($newLine);
+            }
+            
+            $facture->setType("Facture");
+        }
+
+        $factureForm = $this->createForm(FactureType::class, $facture);
         return $this->render('LGMyAEBundle:Facture:add.html.twig', array(
           'addEdit'    => "add",
           'factureForm' => $factureForm->createView(),
@@ -175,7 +209,6 @@ class FactureController extends Controller
 
     }
 
-    /* TO EDIT */
     public function downloadAction(Request $request, $id, $mode, $slug, $inline)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('LGMyAEBundle:Facture');
@@ -199,9 +232,9 @@ class FactureController extends Controller
             'facture'     => $facture
         ));
 
-        $filename = "Facture-".$facture->getClient()->getSlug()."-".$facture->getFactureNumber();
+        $filename = "Facture-".$facture->getFactureNumber()."-".$facture->getClient()->getSlug().".pdf";
 
-        $contentDisposition = ($inline == true)?'inline; filename="'.$filename.'.pdf"':'attachement; filename="'.$filename.'.pdf"';
+        $contentDisposition = ($inline == true)?'inline; filename="'.$filename.'"':'attachement; filename="'.$filename.'"';
 
         return new Response(
             $snappy->getOutputFromHtml($html),

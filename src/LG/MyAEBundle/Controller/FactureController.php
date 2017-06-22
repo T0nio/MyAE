@@ -199,7 +199,7 @@ class FactureController extends Controller
             'facture'     => $facture
         ));
 
-        $filename = $facture->getSlug();
+        $filename = "Facture-".$facture->getClient()->getSlug()."-".$facture->getFactureNumber();
 
         $contentDisposition = ($inline == true)?'inline; filename="'.$filename.'.pdf"':'attachement; filename="'.$filename.'.pdf"';
 

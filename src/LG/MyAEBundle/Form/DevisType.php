@@ -30,7 +30,11 @@ class DevisType extends AbstractType
           ->add('client', EntityType::class, array(
               'class' => 'LGMyAEBundle:Client',
               'choice_label' => 'name',
+              'query_builder' => function ($er) {
+                return $er->createQueryBuilder('w');
+              }
           ))
+
           ->add('title',        TextType::class)
           ->add('description',  TextareaType::class, array('required' => false))
           ->add('validity',     TextType::class)

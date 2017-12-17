@@ -124,6 +124,7 @@ class Facture
         $this->prestation_date = new \Datetime();
         $this->paiement_date = new \Datetime();
         $this->penalite_taux = 20;
+        $this->accompte = 0;
         $this->penalite_date = new \Datetime();
         $this->penalite_date->add(\DateInterval::createFromDateString('1 month'));
     }

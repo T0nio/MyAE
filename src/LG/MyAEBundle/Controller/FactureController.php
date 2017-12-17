@@ -20,7 +20,7 @@ class FactureController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $factureRepository = $em->getRepository('LGMyAEBundle:Facture');
-        $factures = $factureRepository->findBy(array('ownedBy' => $this->getUser()->getId()), array("date" => "desc"));
+        $factures = $factureRepository->findBy(array('ownedBy' => $this->getUser()->getId()), array("prestation_date" => "desc"));
 
         return $this->render('LGMyAEBundle:Facture:index.html.twig', array(
           'factures'           => $factures,

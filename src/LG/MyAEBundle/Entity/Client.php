@@ -342,7 +342,7 @@ class Client
     public function isTelephoneValid(ExecutionContextInterface $context)
     {
         $tel = $this->getTelephone();
-        if(!preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#", $tel) && !preg_match("#^\+[0-9]{1,2}[1-68]([-. ]?[0-9]{2}){4}$#", $tel)){
+        if(!preg_match("#^0[1-9]([-. ]?[0-9]{2}){4}$#", $tel) && !preg_match("#^\+[0-9]{1,2}[0-9]{1,2}([-. ]?[0-9]{2}){4}$#", $tel)){
             $context
             ->buildViolation('Le numéro de téléphone est invalide.') // message
             ->atPath('telephone')                                                   // attribut de l'objet qui est violé

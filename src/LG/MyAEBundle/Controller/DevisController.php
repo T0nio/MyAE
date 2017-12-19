@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use LG\MyAEBundle\Form\DevisType;
 use LG\MyAEBundle\Form\DevisEditType;
 
+
+
 class DevisController extends Controller
 {
     public function indexAction($page)
@@ -19,7 +21,6 @@ class DevisController extends Controller
         $em = $this->getDoctrine()->getManager();
         $devisRepository = $em->getRepository('LGMyAEBundle:Devis');
         $devis = $devisRepository->findBy(array('ownedBy' => $this->getUser()->getId()), array("date" => "desc"));
-
 
         return $this->render('LGMyAEBundle:Devis:index.html.twig', array(
           'devis'           => $devis,
@@ -29,7 +30,7 @@ class DevisController extends Controller
     public function addAction(Request $request, $clientSlug)
     {
         $devis = new Devis();
-        $devisForm = $this->createForm(DevisType::class, $devis);
+        $devisForm = $this->createForm(DevisType::class, $devis, array('user' => $this->getUser()->getUsername()));
 
 
         if ($request->isMethod('POST') && $devisForm->handleRequest($request)->isValid()) {
@@ -100,7 +101,7 @@ class DevisController extends Controller
         if (null === $devis) {
           throw new NotFoundHttpException("Le devis d'id ".$id." n'existe pas.");
         }
-        $devisEditForm = $this->createForm(DevisEditType::class, $devis);
+        $devisEditForm = $this->createForm(DevisEditType::class, $devis, array('user' => $this->getUser()->getUsername()));
 
         if ($request->isMethod('POST') && $devisEditForm->handleRequest($request)->isValid()) {
              $formater = $this->container->get('lg_my_ae.formater');

@@ -30,7 +30,13 @@ class FactureType extends AbstractType
           ->add('client', EntityType::class, array(
               'class' => 'LGMyAEBundle:Client',
               'choice_label' => 'name',
-          ))            
+              'query_builder' => function ($er) use ($options){
+                return $er->createQueryBuilder('w')
+                          ->where('w.ownedBy = :username')
+                          ->setParameter('username', $options['user']);
+              }
+          ))       
+
           ->add('type',               ChoiceType::class, array(
                 'choices'   => array(
                     'Facture'       => 'Facture',
@@ -55,8 +61,9 @@ class FactureType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined('user');
         $resolver->setDefaults(array(
-            'data_class' => 'LG\MyAEBundle\Entity\Facture'
+            'data_class' => 'LG\MyAEBundle\Entity\Facture',
         ));
     }
 

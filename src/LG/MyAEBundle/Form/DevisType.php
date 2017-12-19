@@ -30,7 +30,13 @@ class DevisType extends AbstractType
           ->add('client', EntityType::class, array(
               'class' => 'LGMyAEBundle:Client',
               'choice_label' => 'name',
+              'query_builder' => function ($er) use ($options){
+                return $er->createQueryBuilder('w')
+                          ->where('w.ownedBy = :username')
+                          ->setParameter('username', $options['user']);
+              }
           ))
+
           ->add('title',        TextType::class)
           ->add('description',  TextareaType::class, array('required' => false))
           ->add('validity',     TextType::class)
@@ -48,14 +54,18 @@ class DevisType extends AbstractType
         ;
     }
 
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+
+        $resolver->setDefined('user');
         $resolver->setDefaults(array(
             'data_class' => 'LG\MyAEBundle\Entity\Devis'
         ));
+
     }
 
     /**

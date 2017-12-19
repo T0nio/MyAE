@@ -29,11 +29,10 @@ class FactureController extends Controller
 
     public function addAction(Request $request, $clientSlug, $mode, $id)
     {
-        $facture = new Facture();
-        $factureForm = $this->createForm(FactureType::class, $facture);
+        $facture = new Facture(); 
+        $factureForm = $this->createForm(FactureType::class, $facture, array('user' => $this->getUser()->getUsername()));
 
         // Check if client have a facturation address.
-
 
         if ($request->isMethod('POST') && $factureForm->handleRequest($request)->isValid()) {
             $formater = $this->container->get('lg_my_ae.formater');
@@ -114,7 +113,7 @@ class FactureController extends Controller
             $facture->setType("Facture");
         }
 
-        $factureForm = $this->createForm(FactureType::class, $facture);
+        $factureForm = $this->createForm(FactureType::class, $facture, array('user' => $this->getUser()->getUsername()));
         return $this->render('LGMyAEBundle:Facture:add.html.twig', array(
           'addEdit'    => "add",
           'factureForm' => $factureForm->createView(),
@@ -151,7 +150,7 @@ class FactureController extends Controller
         if (null === $facture) {
           throw new NotFoundHttpException("La facture d'id ".$id." n'existe pas.");
         }
-        $factureEditForm = $this->createForm(FactureEditType::class, $facture);
+        $factureEditForm = $this->createForm(FactureEditType::class, $facture, array('user' => $this->getUser()->getUsername()));
 
         if ($request->isMethod('POST') && $factureEditForm->handleRequest($request)->isValid()) {
              $formater = $this->container->get('lg_my_ae.formater');

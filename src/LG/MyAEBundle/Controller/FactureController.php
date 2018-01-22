@@ -67,7 +67,7 @@ class FactureController extends Controller
             if($last){
                 $number = $last->getFactureNumber() + 1;
             }else{
-                $number = 123;
+                $number = 1;
             }
 
             $facture->setFactureNumber($number);

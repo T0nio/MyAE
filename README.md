@@ -12,6 +12,8 @@ You'll need:
 A web server (NGINX or Apache2 for exemple).
 MyAE can work behind a reverse proxy
 
+To generate the PDF of quotes & invoces, you'll need to install wkhtmltopdf and xvfb.
+
 ## Install
 
 There is a Work In Progress in the install method. Everything there is not tested for now.
@@ -20,7 +22,7 @@ There is a Work In Progress in the install method. Everything there is not teste
 2. Create a app/config/parameters.yml file (based on the .dist file)
 2. Install the PHP dependencies (composer install)
 3. Create the SQL Scheme (php bin/console doctrine:schema:create)
-4. Create a new user (php bin/console fos:user:create) 
+4. Create a new user (php bin/console fos:user:create)
 
 Then it should work !
 

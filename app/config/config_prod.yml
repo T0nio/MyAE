@@ -10,24 +10,13 @@ imports:
 monolog:
     handlers:
         main:
-            type:         fingers_crossed
+            type: fingers_crossed
             action_level: error
-            handler:      nested
+            handler: nested
         nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
             level: debug
         console:
-            type:  console
-
-knp_snappy:
-    pdf:
-        enabled:    true
-        binary:    "/usr/bin/xvfb-run /usr/local/bin/wkhtmltopdf"
-        options:
-            no-outline: true
-            encoding: UTF-8
-    image:
-        enabled:    true
-        binary:     "/usr/bin/xvfb-run /usr/local/bin/wkhtmltoimage"
-        options:    []
+            type: console
+            process_psr_3_messages: false

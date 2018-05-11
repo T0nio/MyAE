@@ -4,7 +4,7 @@ Autoentreprise administration software. MyAE provides you some of the basic need
 
 ## Prerequiste
 
-MyAE is based on Synfony 3.1, a PHP Framework, with a MariaDB (or MySQL) database.
+MyAE is based on Synfony 3.4, a PHP Framework, with a MariaDB (or MySQL) database.
 You'll need:
 * PHP 5.6 or 7.x
 * MariaDB or MySQL
@@ -18,8 +18,8 @@ There is a Work In Progress in the install method. Everything there is not teste
 
 1. Clone the repo 
 2. Create a app/config/parameters.yml file (based on the .dist file)
-2. Install the PHP dependencies (php composer.phar install)
-3. Create the SQL Scheme (php bin/console doctrine:generate:entities)
+2. Install the PHP dependencies (composer install)
+3. Create the SQL Scheme (php bin/console doctrine:schema:create)
 4. Create a new user (php bin/console fos:user:create) 
 
 Then it should work !

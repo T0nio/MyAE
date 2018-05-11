@@ -2,7 +2,6 @@ lg_my_ae:
     resource: "@LGMyAEBundle/Resources/config/routing.yml"
     prefix:   /
 
-
 fos_user_security:
     resource: "@LGUserBundle/Resources/config/routing/security.yml"
 

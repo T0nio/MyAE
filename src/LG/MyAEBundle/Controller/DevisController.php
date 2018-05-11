@@ -163,7 +163,7 @@ class DevisController extends Controller
 
     }
 
-    public function downloadAction(Request $request, $id, $mode, $slug, $inline)
+    public function downloadAction(Request $request, $id = 0, $mode, $slug, $inline)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('LGMyAEBundle:Devis');
 

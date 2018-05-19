@@ -27,7 +27,7 @@ class FactureController extends Controller
         ));
     }
 
-    public function addAction(Request $request, $clientSlug, $mode, $id)
+    public function addAction(Request $request, $clientSlug = null, $mode = null, $id = null)
     {
         $facture = new Facture(); 
         $factureForm = $this->createForm(FactureType::class, $facture, array('user' => $this->getUser()->getUsername()));
